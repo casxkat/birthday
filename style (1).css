@@ -1,0 +1,768 @@
+/* =========================================================
+   KITKAT'S BIRTHDAY — "Rainy Midnight"
+   A quiet, handcrafted little world.
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  /* --- Color tokens --- */
+  --sky-top:      #05070f;
+  --sky-mid:      #0b1130;
+  --sky-bottom:   #16213f;
+  --moon-glow:    #fdf3e2;
+  --moon-body:    #f7ead0;
+  --star-glow:    #dbe6ff;
+  --gold:         #f2c98c;
+  --ink:          #eef1fb;
+  --ink-soft:     rgba(238, 241, 251, 0.72);
+  --ink-faint:    rgba(238, 241, 251, 0.45);
+  --glass-fill:   rgba(255, 255, 255, 0.055);
+  --glass-fill-strong: rgba(255, 255, 255, 0.09);
+  --glass-border: rgba(255, 255, 255, 0.16);
+  --shadow-deep:  rgba(2, 4, 12, 0.55);
+
+  /* --- Type --- */
+  --font-display: 'Cormorant Garamond', 'Iowan Old Style', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* --- Motion --- */
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--sky-top);
+  font-family: var(--font-body);
+  color: var(--ink);
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* =========================================================
+   SKY — layered background
+   ========================================================= */
+
+.sky {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 55%, var(--sky-bottom) 100%);
+  overflow: hidden;
+}
+
+/* stars */
+.stars-layer {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+  opacity: 0.8;
+}
+
+.stars-far {
+  background-image:
+    radial-gradient(1.2px 1.2px at 10% 20%, #ffffff 100%, transparent 0),
+    radial-gradient(1px 1px at 30% 70%, #ffffff 100%, transparent 0),
+    radial-gradient(1.4px 1.4px at 50% 15%, #ffffff 100%, transparent 0),
+    radial-gradient(1px 1px at 70% 40%, #ffffff 100%, transparent 0),
+    radial-gradient(1.2px 1.2px at 85% 65%, #ffffff 100%, transparent 0),
+    radial-gradient(1px 1px at 20% 85%, #ffffff 100%, transparent 0),
+    radial-gradient(1.3px 1.3px at 60% 90%, #ffffff 100%, transparent 0),
+    radial-gradient(1px 1px at 95% 25%, #ffffff 100%, transparent 0);
+  background-size: 100% 100%;
+  animation: twinkle-far 6s ease-in-out infinite alternate;
+}
+
+.stars-near {
+  background-image:
+    radial-gradient(1.6px 1.6px at 15% 45%, #ffffff 100%, transparent 0),
+    radial-gradient(1.8px 1.8px at 40% 25%, #ffffff 100%, transparent 0),
+    radial-gradient(1.5px 1.5px at 65% 60%, #ffffff 100%, transparent 0),
+    radial-gradient(1.7px 1.7px at 80% 10%, #ffffff 100%, transparent 0),
+    radial-gradient(1.5px 1.5px at 25% 95%, #ffffff 100%, transparent 0),
+    radial-gradient(1.8px 1.8px at 90% 80%, #ffffff 100%, transparent 0);
+  animation: twinkle-near 4s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle-far {
+  from { opacity: 0.45; }
+  to   { opacity: 0.85; }
+}
+@keyframes twinkle-near {
+  from { opacity: 0.6; }
+  to   { opacity: 1; }
+}
+
+/* clouds */
+.clouds {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cloud {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(18px);
+  background: rgba(180, 195, 230, 0.09);
+}
+
+.cloud-1 {
+  width: 55vw; height: 14vh;
+  top: 18%;
+  left: -40%;
+  animation: drift-cloud 70s linear infinite;
+}
+.cloud-2 {
+  width: 70vw; height: 16vh;
+  top: 38%;
+  left: -60%;
+  animation: drift-cloud 95s linear infinite;
+  animation-delay: -20s;
+  opacity: 0.7;
+}
+.cloud-3 {
+  width: 45vw; height: 10vh;
+  top: 8%;
+  left: -30%;
+  animation: drift-cloud 55s linear infinite;
+  animation-delay: -40s;
+  opacity: 0.55;
+}
+
+@keyframes drift-cloud {
+  from { transform: translateX(0); }
+  to   { transform: translateX(220vw); }
+}
+
+/* shooting star */
+.shooting-star {
+  position: absolute;
+  top: 12%;
+  left: -5%;
+  width: 2px;
+  height: 2px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 6px 1px #fff, 0 0 12px 2px rgba(255,255,255,0.6);
+  opacity: 0;
+}
+
+.shooting-star.fire {
+  animation: shoot 1.4s ease-out;
+}
+
+@keyframes shoot {
+  0%   { opacity: 0; transform: translate(0, 0) scaleX(1); }
+  8%   { opacity: 1; }
+  85%  { opacity: 0.9; }
+  100% { opacity: 0; transform: translate(60vw, 30vh) scaleX(0.4); }
+}
+
+/* =========================================================
+   RAIN
+   ========================================================= */
+
+.rain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.raindrop {
+  position: absolute;
+  top: -10%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(210, 224, 255, 0.35));
+  transform: rotate(10deg);
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fall {
+  from { transform: translateY(-10vh) rotate(10deg); }
+  to   { transform: translateY(110vh) rotate(10deg); }
+}
+
+/* =========================================================
+   THE MOON
+   ========================================================= */
+
+.moon {
+  position: absolute;
+  top: 9%;
+  right: 12%;
+  width: min(20vw, 120px);
+  height: min(20vw, 120px);
+  border: none;
+  background: none;
+  padding: 0;
+  animation: float-moon 7s ease-in-out infinite;
+  transition: transform 0.4s var(--ease-soft);
+}
+
+@media (max-width: 640px) {
+  .moon {
+    top: 7%;
+    right: 10%;
+    width: 26vw;
+    height: 26vw;
+  }
+}
+
+@keyframes float-moon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.moon-glow {
+  position: absolute;
+  inset: -40%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(253, 243, 226, 0.35) 0%, rgba(253, 243, 226, 0.08) 45%, transparent 70%);
+  transition: opacity 1.2s var(--ease-soft), transform 1.2s var(--ease-soft);
+}
+
+.moon.unlocked .moon-glow {
+  opacity: 1.4;
+  transform: scale(1.25);
+}
+
+.moon-face { position: relative; display: block; overflow: visible; }
+
+.moon-body {
+  fill: var(--moon-body);
+  filter: drop-shadow(0 0 18px rgba(253, 243, 226, 0.55));
+  transition: filter 1s var(--ease-soft);
+}
+
+.moon.unlocked .moon-body {
+  filter: drop-shadow(0 0 32px rgba(253, 243, 226, 0.85));
+}
+
+.moon-ear {
+  fill: var(--moon-body);
+}
+
+.moon-features { transition: opacity 0.6s var(--ease-soft); }
+
+.moon-eye, .moon-mouth {
+  fill: none;
+  stroke: #7a6a4e;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+.moon-blush {
+  fill: #f0b98f;
+  opacity: 0.45;
+}
+
+.moon:not(.unlocked) {
+  cursor: default;
+}
+
+.moon.unlocked {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.moon.unlocked:hover,
+.moon.unlocked:focus-visible {
+  transform: scale(1.12);
+}
+
+.moon:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 6px;
+  border-radius: 50%;
+}
+
+/* moon unlock message */
+.moon-message {
+  position: absolute;
+  top: calc(9% + min(20vw, 120px) + 14px);
+  right: 8%;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  color: var(--ink-soft);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 1s var(--ease-soft), transform 1s var(--ease-soft);
+  z-index: 5;
+  text-align: right;
+}
+
+.moon-message.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================================================
+   MEMORY STARS
+   ========================================================= */
+
+.memory-stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.4s var(--ease-soft);
+  pointer-events: none;
+}
+
+.memory-stars.visible { opacity: 1; }
+
+.memory-star {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  pointer-events: auto;
+  border: none;
+  background: none;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  transition: transform 0.35s var(--ease-soft);
+}
+
+.memory-star:focus-visible {
+  outline: 2px solid var(--star-glow);
+  outline-offset: 6px;
+  border-radius: 50%;
+}
+
+.memory-star .core {
+  position: absolute;
+  inset: 35%;
+  border-radius: 50%;
+  background: var(--star-glow);
+  box-shadow: 0 0 10px 2px rgba(219, 230, 255, 0.7);
+  animation: pulse-star 3.2s ease-in-out infinite;
+}
+
+.memory-star .halo {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(219, 230, 255, 0.25), transparent 70%);
+}
+
+.memory-star:hover,
+.memory-star:focus-visible {
+  transform: translate(-50%, -50%) scale(1.35);
+}
+
+.memory-star.explored .core {
+  background: var(--gold);
+  box-shadow: 0 0 12px 3px rgba(242, 201, 140, 0.8);
+  animation: none;
+}
+
+.memory-star.explored .halo {
+  background: radial-gradient(circle, rgba(242, 201, 140, 0.3), transparent 70%);
+}
+
+@keyframes pulse-star {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.25); opacity: 1; }
+}
+
+.memory-star-label {
+  position: absolute;
+  top: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.memory-star:hover .memory-star-label,
+.memory-star:focus-visible .memory-star-label {
+  opacity: 1;
+}
+
+/* =========================================================
+   INTRO SCREEN
+   ========================================================= */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8vh 6vw;
+  gap: 1.1rem;
+  background: rgba(5, 7, 15, 0.28);
+  backdrop-filter: blur(2px);
+  transition: opacity 1.1s var(--ease-soft), visibility 1.1s;
+}
+
+.intro.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro-eyebrow {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.intro-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.1rem, 8vw, 3.6rem);
+  line-height: 1.15;
+  color: var(--ink);
+  text-shadow: 0 0 30px rgba(253, 243, 226, 0.18);
+}
+
+.intro-name {
+  font-style: italic;
+  color: var(--moon-glow);
+}
+
+.intro-sub {
+  margin: 0.4rem 0 0.8rem;
+  max-width: 32ch;
+  font-size: clamp(0.92rem, 2.4vw, 1.05rem);
+  line-height: 1.7;
+  color: var(--ink-soft);
+  font-weight: 300;
+}
+
+/* =========================================================
+   GLASS BUTTON (shared)
+   ========================================================= */
+
+.glass-button {
+  position: relative;
+  padding: 0.85rem 2.4rem;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  box-shadow: 0 8px 30px var(--shadow-deep), inset 0 1px 0 rgba(255,255,255,0.12);
+  transition: background 0.4s var(--ease-soft), transform 0.4s var(--ease-soft), box-shadow 0.4s var(--ease-soft);
+}
+
+.glass-button:hover,
+.glass-button:focus-visible {
+  background: var(--glass-fill-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px var(--shadow-deep), inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+.glass-button:focus-visible {
+  outline: 2px solid var(--moon-glow);
+  outline-offset: 3px;
+}
+
+.glass-button:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   SKY HINT (after intro closes)
+   ========================================================= */
+
+.sky-hint {
+  position: fixed;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  color: var(--ink-faint);
+  opacity: 0;
+  transition: opacity 1.5s var(--ease-soft) 0.6s;
+  text-align: center;
+  pointer-events: none;
+}
+
+.sky-hint.show { opacity: 1; }
+.sky-hint.fade-out { opacity: 0; transition: opacity 1s var(--ease-soft); }
+
+/* =========================================================
+   POPUP (memory)
+   ========================================================= */
+
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6vw;
+  background: rgba(3, 5, 12, 0.55);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s var(--ease-soft), visibility 0.5s;
+}
+
+.popup-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popup-card {
+  position: relative;
+  width: min(420px, 100%);
+  max-height: 82vh;
+  overflow-y: auto;
+  padding: 2rem 1.8rem 1.8rem;
+  border-radius: 22px;
+  border: 1px solid var(--glass-border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  box-shadow: 0 20px 60px var(--shadow-deep);
+  transform: translateY(18px) scale(0.97);
+  opacity: 0;
+  transition: transform 0.55s var(--ease-soft), opacity 0.55s var(--ease-soft);
+}
+
+.popup-overlay.open .popup-card {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.popup-eyebrow {
+  margin: 0 0 0.3rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.popup-title {
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 4vw, 1.9rem);
+  color: var(--moon-glow);
+}
+
+.popup-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  margin-bottom: 1.1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+}
+
+.popup-image-label {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.03em;
+}
+
+.popup-text {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  font-weight: 300;
+}
+
+.popup-close, .letter-overlay .popup-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.popup-close svg { stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; fill: none; }
+
+.popup-close:hover, .popup-close:focus-visible {
+  background: rgba(255,255,255,0.14);
+  transform: rotate(90deg);
+}
+
+/* =========================================================
+   LETTER PANEL
+   ========================================================= */
+
+.letter-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6vw;
+  background: rgba(3, 5, 12, 0.7);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.7s var(--ease-soft), visibility 0.7s;
+}
+
+.letter-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.letter-card {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: 84vh;
+  overflow-y: auto;
+  padding: 2.6rem 2.2rem;
+  border-radius: 26px;
+  border: 1px solid var(--glass-border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
+  backdrop-filter: blur(26px) saturate(150%);
+  -webkit-backdrop-filter: blur(26px) saturate(150%);
+  box-shadow: 0 24px 70px var(--shadow-deep);
+  transform: scale(0.96);
+  opacity: 0;
+  transition: transform 0.6s var(--ease-soft), opacity 0.6s var(--ease-soft);
+}
+
+.letter-overlay.open .letter-card {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.letter-eyebrow {
+  margin: 0 0 0.3rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  text-align: center;
+}
+
+.letter-title {
+  margin: 0 0 1.6rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.6rem, 4.5vw, 2.1rem);
+  color: var(--moon-glow);
+  text-align: center;
+}
+
+.letter-body p {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--ink-soft);
+  font-weight: 300;
+  margin: 0 0 1.1rem;
+}
+
+.letter-body p:last-child {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--ink);
+  margin-top: 1.6rem;
+}
+
+/* =========================================================
+   MUSIC TOGGLE
+   ========================================================= */
+
+.music-toggle {
+  position: fixed;
+  top: 1.4rem;
+  left: 1.4rem;
+  z-index: 25;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.music-toggle:hover, .music-toggle:focus-visible {
+  background: var(--glass-fill-strong);
+  transform: scale(1.06);
+}
+
+.music-toggle svg { stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+
+.icon-muted { display: none; }
+
+.music-toggle[aria-pressed="false"] .icon-note { display: block; }
+.music-toggle[aria-pressed="false"] .icon-muted { display: none; }
+.music-toggle[aria-pressed="true"] .icon-note { display: none; }
+.music-toggle[aria-pressed="true"] .icon-muted { display: block; }
+
+/* =========================================================
+   RESPONSIVE TWEAKS
+   ========================================================= */
+
+@media (min-width: 900px) {
+  .intro { gap: 1.4rem; }
+  .popup-card { padding: 2.4rem 2.2rem 2rem; }
+}
+
+@media (max-width: 420px) {
+  .memory-star { width: 26px; height: 26px; }
+  .letter-card { padding: 2rem 1.5rem; }
+}
