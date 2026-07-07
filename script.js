@@ -17,14 +17,7 @@
       id: 'first-impression',
       title: 'my first love',
       top: '18%', left: '14%',
-      text: 'I spent so long not knowing what love meant
-         Or if I'd ever really feel it too.
-Then life, in all its strange coincidence,
-Decided I should find it all in you.
-   No soul before had ever felt like home,
-No name could quiet every fear I knew.
-If hearts are constellations left to roam,
-Then every star has always led to you.',
+      text: 'I spent so long not knowing what love meant',
       image: 'photo1.jpg'
     },
     {
