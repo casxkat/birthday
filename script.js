@@ -26,7 +26,7 @@
       No name could quiet every fear I knew.
       If hearts are constellations left to roam,
       Then every star has always led to you.`,
-      image: 'photo1.jpg'
+      image: 'https://cdn.discordapp.com/attachments/1184777724791894029/1524078518286422046/20260707_211339.jpg?ex=6a4e703a&is=6a4d1eba&hm=4a47f57126ccbcbf848930bb6f59afc606ac648a18eec9b6889fcb05cde40ca1'
     },
     {
       id: 'day-we-met',
