@@ -32,15 +32,31 @@
       id: 'day-we-met',
       title: 'the day we met',
       top: '30%', left: '76%',
-      text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
-      image: 'photo2.jpg'
+      text: `We met like stars that never knew
+      Their light would intertwine.
+      Two distant worlds, two separate skies,
+      Until your hand found mine.
+      
+      They say these clusters crossed by chance,
+      Two galaxies of light made one.
+      Perhaps that's how the universe
+      Decided we'd begun.`,
+      image: 'https://cdn.discordapp.com/attachments/1184777724791894029/1524073510467538984/Screenshot_2026-07-07-20-47-53-06_59ca41e6dac314271693cecb12ac99dc.jpg?ex=6a4e6b90&is=6a4d1a10&hm=66f92e702573b95d7253cbfdc145fe0909ba0ad6cd2e1463f679330354d97c0b'
     },
     {
       id: 'your-laugh',
       title: 'our nights..',
       top: '46%', left: '20%',
-      text: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.',
-      image: 'photo3.jpg'
+      text: `We never needed grand adventures,
+      Or somewhere new for us to roam.
+      Somehow, a playlist, you, and midnight
+      Made every night feel just like home.
+      
+      I used to think the night was lonely,
+      A sky too vast to understand.
+      Then every midnight found its meaning,
+      The moment it could hold your hand.`,
+      image: 'https://cdn.discordapp.com/attachments/1184777724791894029/1524074547148623872/IMG_1736.png?ex=6a4e6c87&is=6a4d1b07&hm=03e09329ecb9f03685e460af6afad37e10fb05b2d5ff8cfa3f1893305deb3036'
     },
     {
       id: 'photos',
