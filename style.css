@@ -263,6 +263,11 @@ button {
   fill: var(--moon-body);
 }
 
+.moon-ear-inner {
+  fill: #e8b98f;
+  opacity: 0.55;
+}
+
 .moon-features { transition: opacity 0.6s var(--ease-soft); }
 
 .moon-eye, .moon-mouth {
